@@ -4,6 +4,20 @@ let toastTimer;
 function toast(message) { const box=$('#toast');box.textContent=message;box.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>box.classList.remove('show'),2400); }
 const money = value => new Intl.NumberFormat('id-ID').format(value);
 const modal=$('#registration-modal');
+const adminAuthDialog=$('#admin-auth-dialog'),adminMain=$('.admin-standalone');
+async function openAdminDashboard(){
+  if(!window.UMKMHUB_REMOTE?.ready){$('#admin-auth-message').textContent='Koneksi Supabase gagal dimuat. Periksa internet dan konfigurasi.';adminAuthDialog.showModal();return;}
+  const {data:{session}}=await UMKMHUB_REMOTE.session();
+  if(session&&await UMKMHUB_REMOTE.isAdmin()){adminMain.hidden=false;UMKMStore.refreshRemote?.();return;}
+  adminAuthDialog.showModal();
+}
+$('#admin-auth-form').addEventListener('submit',async event=>{
+  event.preventDefault();const form=new FormData(event.currentTarget),message=$('#admin-auth-message'),button=event.currentTarget.querySelector('[type="submit"]');button.disabled=true;message.textContent='Memeriksa akses…';
+  try{const result=await UMKMHUB_REMOTE.signInAdmin(String(form.get('email')).trim(),String(form.get('password')));if(result.error)throw result.error;if(!await UMKMHUB_REMOTE.isAdmin()){await UMKMHUB_REMOTE.signOut();throw new Error('Akun ini belum diberi role admin di tabel user_roles.');}adminMain.hidden=false;adminAuthDialog.close();await UMKMStore.refreshRemote?.();}
+  catch(error){message.textContent=error.message||'Email atau kata sandi salah.';}
+  finally{button.disabled=false;}
+});
+openAdminDashboard();
 let currentPage=1;
 const pageSize=10;
 
@@ -98,8 +112,7 @@ $('#umkm-table').addEventListener('click',event=>{
   const row=button.closest('tr'),item=UMKMStore.get().businesses.find(record=>record.id===row.dataset.id);if(!item)return;
   const next=button.dataset.action==='verify'?'Terverifikasi':item.status==='Tidak Aktif'?'Menunggu Verifikasi':'Tidak Aktif';
   UMKMStore.setStatus(item.id,next);
-  if(next==='Terverifikasi'&&item.passwordHash){const opened=openVerificationWhatsApp(item);toast(opened?`${item.name} terverifikasi. Pesan WhatsApp siap dikirim; tekan Kirim di WhatsApp.`:`${item.name} terverifikasi. WhatsApp tidak dapat dibuka otomatis.`);}
-  else if(next==='Terverifikasi')toast(`${item.name} terverifikasi. Data ini belum memiliki akun login penjual.`);
+  if(next==='Terverifikasi'){const opened=openVerificationWhatsApp(item);toast(opened?`${item.name} terverifikasi. Pesan WhatsApp siap dikirim; tekan Kirim di WhatsApp.`:`${item.name} terverifikasi. WhatsApp tidak dapat dibuka otomatis.`);}
   else toast(`${item.name}: status diubah menjadi ${next}.`);
 });
 $('#cancel-delete').addEventListener('click',()=>$('#delete-dialog').close());
@@ -120,6 +133,13 @@ $('#export-data').addEventListener('click',()=>{
   const csv=lines.map(line=>line.map(value=>`"${String(value??'').replaceAll('"','""')}"`).join(',')).join('\r\n'),url=URL.createObjectURL(new Blob(['\ufeff',csv],{type:'text/csv;charset=utf-8'}));
   const link=document.createElement('a');link.href=url;link.download='umkmhub-data.csv';link.click();URL.revokeObjectURL(url);toast(`${data.length} data diekspor ke CSV.`);
 });
+$('#import-local-data').addEventListener('click',async event=>{
+  if(!confirm('Impor data UMKM dari penyimpanan browser laptop ini ke Supabase? Kata sandi lama dan akun demo tidak akan disalin.'))return;
+  const button=event.currentTarget;button.disabled=true;
+  try{const result=await UMKMStore.migrateLocalBusinesses();await UMKMStore.refreshRemote();toast(result.count?`${result.count} data lama berhasil diimpor. Pemilik dapat menghubungkan profil dengan mendaftar memakai nomor WhatsApp yang sama.`:'Tidak ada data lama baru untuk diimpor.');}
+  catch(error){toast(`Impor gagal: ${error.message||'periksa kebijakan database.'}`);}
+  finally{button.disabled=false;}
+});
 $('#admin-add').addEventListener('click',()=>modal.showModal());
 $$('.modal-close,.cancel-button').forEach(button=>button.addEventListener('click',()=>modal.close()));
 modal.addEventListener('click',event=>{if(event.target===modal)modal.close();});
@@ -129,5 +149,6 @@ $('#registration-form').addEventListener('submit',event=>{
 });
 $('#category-info').addEventListener('click',()=>toast('Sebaran kategori berdasarkan data agregat dan pendaftaran baru.'));
 $('.admin-notify').addEventListener('click',()=>toast(`${UMKMStore.get().metrics.pending} UMKM menunggu verifikasi.`));
-$('.admin-account').addEventListener('click',()=>toast('Anda masuk sebagai Admin UMKMHUB (mode demo).'));
+$('.admin-account').addEventListener('click',async()=>{await UMKMHUB_REMOTE.signOut();location.reload();});
+window.addEventListener('umkmhub:sync-error',event=>toast(`Sinkronisasi gagal: ${event.detail||'periksa koneksi Supabase.'}`));
 $('#filter-period').dispatchEvent(new Event('change'));

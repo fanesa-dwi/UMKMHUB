@@ -2,6 +2,7 @@ const $=selector=>document.querySelector(selector);
 const $$=selector=>[...document.querySelectorAll(selector)];
 let toastTimer,currentBusinessId='';
 function toast(message){const node=$('#toast');node.textContent=message;node.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>node.classList.remove('show'),2400);}
+window.addEventListener('umkmhub:sync-error',event=>toast(`Sinkronisasi gagal: ${event.detail||'periksa koneksi Supabase.'}`));
 const money=value=>new Intl.NumberFormat('id-ID').format(Number(value)||0);
 const email=UMKMStore.getActiveSellerEmail();
 let owned=UMKMStore.ownedBusinesses(email);
@@ -9,7 +10,7 @@ const requested=new URLSearchParams(location.search).get('business');
 if(requested&&owned.some(item=>item.id===requested))currentBusinessId=requested;
 else currentBusinessId=owned[0]?.id||'';
 
-function selectedBusiness(){return UMKMStore.get().businesses.find(item=>item.id===currentBusinessId&&item.ownerEmail===email)||null;}
+function selectedBusiness(){return UMKMStore.ownedBusinesses(email).find(item=>item.id===currentBusinessId)||null;}
 function render(){
   owned=UMKMStore.ownedBusinesses(email);
   if(!owned.some(item=>item.id===currentBusinessId))currentBusinessId=owned[0]?.id||'';

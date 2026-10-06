@@ -8,6 +8,7 @@ function toast(message) {
   const box = $('#toast'); box.textContent = message; box.classList.add('show');
   clearTimeout(toastTimer); toastTimer = setTimeout(() => box.classList.remove('show'), 2400);
 }
+window.addEventListener('umkmhub:sync-error',event=>toast(`Sinkronisasi gagal: ${event.detail||'periksa koneksi Supabase.'}`));
 function money(value) { return new Intl.NumberFormat('id-ID').format(value); }
 function showRegistration() { $('#registration-modal').showModal(); }
 function whatsappUrl(phone, businessName='UMKM') { const digits=String(phone||'').replace(/\D/g,'');if(!digits)return '';const intl=digits.startsWith('0')?`62${digits.slice(1)}`:digits;return `https://wa.me/${intl}?text=${encodeURIComponent(`Halo ${businessName}, saya melihat usaha Anda di UMKMHUB dan ingin bertanya tentang produknya.`)}`; }
@@ -183,10 +184,12 @@ registrationForm.addEventListener('submit',async event=>{
   if(UMKMStore.hasSellerAccount(whatsapp,email)){toast('Nomor WhatsApp atau email sudah digunakan akun penjual lain.');setRegistrationStep(1);return;}
   registrationNext.disabled=true;
   try{
-    const credential=await UMKMStore.createSellerCredential(password);
-    const item=UMKMStore.addBusiness({name:String(f.get('business')).trim(),owner:String(f.get('owner')).trim(),phone:whatsapp,whatsapp,email,ownerEmail:email,passwordSalt:credential.salt,passwordHash:credential.hash,ownerAddress:String(f.get('ownerAddress')).trim(),category:String(f.get('category')),year:Number(f.get('year'))||null,region:address.split(',').at(-1).trim()||address,address,description:String(f.get('description')).trim(),employees:Number(f.get('employees'))||0,revenue:Number(String(f.get('revenue')).replace(/\D/g,''))||0,products:Number(f.get('products'))||0,productList:[],businessStatus:String(f.get('businessStatus')),social:String(f.get('social')).trim(),photoName:f.get('photo')?.name||'',photoDataUrl:await compressBusinessPhoto(f.get('photo')),icon:'🏪'});
+    let account=await UMKMStore.registerSeller(whatsapp,password,{name:String(f.get('business')).trim(),email});
+    if(account.needsOtp){const code=window.prompt('Masukkan kode verifikasi SMS yang dikirim ke nomor WhatsApp/telepon terdaftar:');if(!code)throw new Error('Verifikasi nomor dibatalkan.');account=await UMKMStore.verifySellerPhone(whatsapp,code.trim());}
+    if(account.claimed.length){registrationDialog.close();toast('Profil usaha lama berhasil dihubungkan ke akun ini.');location.href='seller.html';return;}
+    const item=UMKMStore.addBusiness({name:String(f.get('business')).trim(),owner:String(f.get('owner')).trim(),phone:whatsapp,whatsapp,email,ownerEmail:email,ownerAddress:String(f.get('ownerAddress')).trim(),category:String(f.get('category')),year:Number(f.get('year'))||null,region:address.split(',').at(-1).trim()||address,address,description:String(f.get('description')).trim(),employees:Number(f.get('employees'))||0,revenue:Number(String(f.get('revenue')).replace(/\D/g,''))||0,products:Number(f.get('products'))||0,productList:[],businessStatus:String(f.get('businessStatus')),social:String(f.get('social')).trim(),photoName:f.get('photo')?.name||'',icon:'🏪'});
     registrationDialog.close();toast(`${item.name} terkirim untuk verifikasi. Login aktif setelah admin menyetujui.`);
-  }catch(error){toast(error?.message?.includes('Secure password')?'Browser belum mendukung penyimpanan kata sandi aman. Buka melalui localhost atau HTTPS.':'Pendaftaran gagal disimpan. Coba lagi.');}
+  }catch(error){toast(error?.message||'Pendaftaran gagal disimpan. Coba lagi.');}
   finally{registrationNext.disabled=false;}
 });
 sellerLoginForm.addEventListener('submit',async event=>{
