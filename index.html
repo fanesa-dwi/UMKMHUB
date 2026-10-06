@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f7f8f5" />
+  <meta name="description" content="Temukan, dukung, dan tumbuhkan UMKM Indonesia bersama UMKMHUB." />
+  <title>UMKMHUB — Tumbuh Bersama</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="admin.css" />
+  <link rel="stylesheet" href="motion.css" />
+  <link rel="stylesheet" href="app-motion.css" />
+  
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#home" aria-label="UMKMHUB beranda"><span class="brand-mark"><svg viewBox="0 0 40 40" fill="none"><path d="M6 19.5 20 7l14 12.5v14a1.5 1.5 0 0 1-1.5 1.5h-9v-11h-7v11h-9A1.5 1.5 0 0 1 6 33.5v-14Z" fill="currentColor"/><path d="M4 19 20 5l16 14" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>UMKM<span class="brand-green">HUB</span></span></a>
+      <div class="side-label">MENU UTAMA</div>
+      <nav class="main-nav" aria-label="Navigasi utama">
+        <a class="nav-link active" href="#home"><span class="nav-icon">⌂</span>Beranda</a>
+        <a class="nav-link" href="#community"><span class="nav-icon">▤</span>Komunitas</a>
+        <a class="nav-link seller-dashboard-link" href="seller.html" hidden><span class="nav-icon">▥</span>Dashboard Penjual</a>
+        <a class="nav-link" href="#programs"><span class="nav-icon">♧</span>FAQ & Panduan</a>
+        <a class="nav-link" href="#saved"><span class="nav-icon">♡</span>Disimpan</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar"><div class="mobile-brand"><span class="brand-mark"><svg viewBox="0 0 40 40" fill="none"><path d="M6 19.5 20 7l14 12.5v14a1.5 1.5 0 0 1-1.5 1.5h-9v-11h-7v11h-9A1.5 1.5 0 0 1 6 33.5v-14Z" fill="currentColor"/><path d="M4 19 20 5l16 14" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>UMKM<span class="brand-green">HUB</span></div></header>
+      <div class="content-wrap">
+      <div class="community-view page-view" id="home" data-page-view="home">
+        <section class="welcome-row"><div><div class="date-label">SELASA, 24 JUNI 2025</div><h1>Selamat datang di UMKMHUB <span>✦</span></h1><p>Temukan panduan belanja lokal dan kenalkan usahamu.</p></div><div class="buyer-actions"><button type="button" class="seller-login-trigger" id="seller-login-trigger">Masuk penjual</button><button class="primary-button" id="add-business"><span>＋</span> Daftarkan UMKM</button></div></section>
+        <section class="hero-banner"><div class="hero-copy"><div class="hero-tag"><span>✳</span> TUMBUH BERSAMA</div><h2>Usaha lokal,<br>cerita <em>luar biasa.</em></h2><p>Temukan inspirasi, perluas koneksi, dan dukung UMKM Indonesia.</p></div><div class="hero-art" aria-hidden="true"><div class="sun"></div><div class="arch arch-back"></div><div class="arch arch-front"><div class="arch-window"></div></div><div class="plant plant-a">♧</div><div class="plant plant-b">♧</div><div class="hero-sticker">✿<small>lokal<br>berdaya</small></div><div class="floating-note">✦  Bangga produk lokal</div></div><div class="hero-dots"><i class="on"></i><i></i><i></i></div></section>
+
+        <section class="stats-grid" aria-label="Ringkasan komunitas"><article class="stat-card"><span class="stat-icon green-icon">♧</span><small>UMKM terdaftar</small><strong>0</strong><span class="stat-foot">sesuai akun penjual terdaftar</span></article><article class="stat-card"><span class="stat-icon peach-icon">♡</span><small>Usaha lokal aktif</small><strong>0</strong><span class="stat-foot">status usaha aktif</span></article><article class="stat-card"><span class="stat-icon yellow-icon">♧</span><small>UMKM terverifikasi</small><strong>0</strong><span class="stat-foot">akun terverifikasi</span></article><article class="stat-card stat-highlight"><div class="highlight-top"><span>DUKUNG USAHA LOKAL</span><span>↗</span></div><strong>Belanja & berjualan</strong><p>Temukan produk lokal atau perkenalkan usahamu.</p><button type="button" class="text-link">Lihat FAQ <span>→</span></button><div class="highlight-flower">✿</div></article></section>
+
+        <section class="section-block buyer-discover" id="discover" hidden>
+  <div class="section-heading"><div><div class="eyebrow">TEMUKAN USAHA LOKAL</div><h2>Cari UMKM yang kamu butuhkan</h2><p class="discover-intro">Jelajah tanpa akun. Hubungi penjual dan lanjutkan transaksi langsung melalui WhatsApp.</p></div></div>
+  <label class="discover-search"><span aria-hidden="true">⌕</span><input id="discover-search" type="search" placeholder="Cari nama usaha, produk, atau lokasi" aria-label="Cari UMKM berdasarkan nama, produk, atau lokasi"></label>
+  <div class="category-row" role="group" aria-label="Filter kategori"><button class="category-chip selected" data-category="Semua">✳ Semua</button></div>
+  <div class="business-grid" id="business-grid"></div>
+  <div class="empty-search" id="empty-search">Belum ada UMKM terverifikasi yang cocok.</div>
+</section>
+      </div>
+
+        <section class="section-block saved-section page-view" id="saved" data-page-view="saved" aria-labelledby="saved-title">
+          <div class="section-heading"><div><div class="eyebrow">DAFTAR PRIBADI</div><h2 id="saved-title">UMKM yang kamu simpan</h2><p class="saved-intro">Kumpulkan toko favorit agar mudah ditemukan kembali.</p></div></div>
+          <p class="saved-empty" id="saved-empty">Belum ada toko tersimpan. Kunjungi postingan penjual di Komunitas, lalu tekan Simpan.</p>
+          <div class="saved-grid" id="saved-grid"></div>
+        </section>
+
+        <section class="section-block faq-section page-view" id="programs" data-page-view="programs" aria-labelledby="faq-title">
+          <div class="section-heading"><div><div class="eyebrow">PANDUAN UMKMHUB</div><h2 id="faq-title">Belanja lokal atau mulai berjualan</h2><p class="faq-intro">Jawaban singkat tentang cara menemukan produk UMKM dan mengenalkan usahamu di UMKMHUB.</p></div></div>
+          <div class="faq-list">
+            <details><summary>Bagaimana cara membeli produk di UMKMHUB?</summary><p>Jelajahi UMKM terverifikasi, pilih usaha atau produk yang kamu suka, lalu tekan <b>Hubungi via WhatsApp</b>. Kamu bisa bertanya stok dan menyepakati harga, pembayaran, serta pengiriman langsung dengan penjual.</p></details>
+            <details><summary>Apakah pembeli perlu membuat akun?</summary><p>Tidak. Kamu dapat melihat daftar usaha dan produk tanpa akun, kemudian menghubungi penjual langsung melalui WhatsApp.</p></details>
+            <details><summary>Bagaimana cara mendaftarkan usaha agar bisa tampil?</summary><p>Tekan <b>Daftarkan UMKM</b>, lengkapi data pemilik dan usaha, lalu buat kata sandi untuk akun penjual. Admin akan meninjau pendaftaran sebelum usaha ditampilkan.</p></details>
+            <details><summary>Kapan usaha saya tampil di daftar UMKM?</summary><p>Usaha tampil kepada masyarakat setelah pendaftaran diverifikasi oleh admin. Setelah disetujui, masuk dengan nomor WhatsApp dan kata sandi untuk mengelola profil serta produk di dashboard penjual.</p></details>
+            <details><summary>Bagaimana transaksi dan pengiriman dilakukan?</summary><p>UMKMHUB membantu mempertemukan pembeli dan penjual. Detail pesanan, pembayaran, dan pengiriman disepakati langsung antara pembeli dan penjual melalui WhatsApp.</p></details>
+            <details><summary>Apakah penjual bisa memperkenalkan produk dan kabar usaha?</summary><p>Bisa. Penjual yang sudah masuk dapat mengelola profil usaha, menambahkan produk, dan membagikan cerita atau informasi terbaru untuk komunitas.</p></details>
+          </div>
+          <div class="faq-actions"><button type="button" class="primary-button" id="faq-seller-register">Daftarkan usahamu <span>→</span></button></div>
+        </section>
+
+        <section class="section-block community-section page-view" id="community" data-page-view="community"><div class="section-heading"><div><div class="eyebrow">DARI KOMUNITAS</div><h2>Cerita & inspirasi <span class="tiny-spark">✦</span></h2></div><button class="compose-button" id="compose-post">＋ Buat postingan</button></div><p class="community-empty" id="community-empty">Belum ada postingan dari penjual aktif.</p></section>
+        <section class="section-block about-section page-view" id="tentang" data-page-view="tentang" aria-labelledby="about-title"><div class="eyebrow">TENTANG PROYEK</div><h1 id="about-title">Tentang UMKMHUB</h1><p class="about-intro">Proyek ini dibuat sebagai bagian dari tugas Rekayasa Perangkat Lunak.</p><article class="about-creator-card"><span class="about-creator-avatar" aria-hidden="true">FP</span><div class="about-creator-details"><span class="eyebrow">IDENTITAS PEMBUAT</span><h2>Fanesa dwi putri</h2><dl><div><dt>NIM</dt><dd>43250542</dd></div><div><dt>Tugas</dt><dd>Rekayasa perangkat lunak (RPL)</dd></div></dl></div></article></section>
+        <footer class="page-footer">UMKMHUB <span>·</span> Ruang tumbuh untuk usaha lokal <span>·</span> <a href="#tentang">Tentang kami</a></footer>
+      </div>
+    </main>
+  </div>
+  <nav class="mobile-nav" aria-label="Navigasi mobile"><a class="active" href="#home"><span>⌂</span>Beranda</a><a href="#community"><span>▤</span>Komunitas</a><button id="mobile-add" aria-label="Daftarkan UMKM">＋</button><a href="#programs"><span>❔</span>FAQ</a><a href="#saved"><span>♡</span>Disimpan</a></nav>
+  <div class="toast" id="toast" role="status"></div>
+  <dialog class="registration-modal" id="registration-modal"><form id="registration-form"><div class="modal-top"><div><div class="eyebrow">PENDATAAN UMKM</div><h2>Daftarkan usahamu</h2><p>Lengkapi data agar usaha lebih mudah ditemukan.</p></div><button type="button" class="modal-close" aria-label="Tutup">×</button></div><div class="form-section-title">Data pemilik</div><div class="form-grid"><label>Nama pemilik<input name="owner" required placeholder="Nama lengkap"></label><label>Nomor WhatsApp<input name="phone" required inputmode="tel" placeholder="08xxxxxxxxxx"></label><label>Email<input name="email" type="email" required placeholder="nama@email.com"></label><label>Alamat pemilik<input name="ownerAddress" required placeholder="Kecamatan, kota"></label></div><div class="form-section-title">Data usaha</div><div class="form-grid"><label>Nama usaha<input name="business" required placeholder="Nama yang dikenal pelanggan"></label><label>Kategori<select name="category" required><option value="">Pilih kategori</option><option>Kuliner</option><option>Fashion</option><option>Kerajinan</option><option>Kecantikan</option><option>Jasa</option><option>Minuman</option><option>Lainnya</option></select></label><label>Tahun berdiri<input name="year" type="number" min="1900" max="2026" placeholder="Contoh: 2021"></label><label>Alamat usaha<input name="address" required placeholder="Jalan, kecamatan, kota"></label><label>Jumlah karyawan<input name="employees" type="number" min="0" placeholder="Jumlah orang"></label><label>Omzet per bulan<input name="revenue" placeholder="Rp"></label><label>Jumlah produk<input name="products" type="number" min="0" placeholder="Jumlah produk"></label><label>Status usaha<select name="businessStatus"><option>Aktif</option><option>Tidak Aktif</option></select></label><label class="full-field">Media sosial<input name="social" placeholder="Instagram, TikTok, atau tautan lainnya"></label><label class="full-field">Deskripsi usaha<textarea name="description" rows="3" placeholder="Ceritakan usaha dan produk unggulanmu"></textarea></label><label class="full-field">Foto usaha / produk<input name="photo" type="file" accept="image/*"></label></div><div class="seller-account-step" id="seller-account-step" hidden><div class="form-section-title">Buat akun penjual</div><p class="account-step-copy">Nomor WhatsApp ini menjadi nomor login. Akun dapat digunakan setelah disetujui admin.</p><label>Nomor WhatsApp untuk login<input id="seller-account-phone" type="tel" readonly></label><label>Kata sandi<input id="seller-password" type="password" minlength="8" autocomplete="new-password" placeholder="Minimal 8 karakter"></label><label>Ulangi kata sandi<input id="seller-password-confirm" type="password" minlength="8" autocomplete="new-password" placeholder="Masukkan ulang kata sandi"></label></div><div class="form-note" id="registration-note">Pendaftaran akan berstatus <b>Menunggu Verifikasi</b> sampai ditinjau pengelola.</div><div class="modal-actions"><button type="button" class="cancel-button" id="registration-back" hidden>Kembali</button><button type="button" class="cancel-button" id="registration-cancel">Batal</button><button type="submit" class="primary-button" id="registration-next">Selanjutnya <span>→</span></button></div></form></dialog>
+  <dialog class="seller-login-modal" id="seller-login-modal"><form id="seller-login-form"><div class="modal-top"><div><div class="eyebrow">AKUN PENJUAL</div><h2>Masuk ke UMKMHUB</h2><p>Gunakan nomor WhatsApp yang didaftarkan.</p></div><button type="button" class="modal-close seller-login-close" aria-label="Tutup">×</button></div><label>Nomor WhatsApp<input name="phone" type="tel" autocomplete="username" required placeholder="08xxxxxxxxxx"></label><label>Kata sandi<input name="password" type="password" autocomplete="current-password" required></label><p class="seller-login-message" id="seller-login-message" role="status"></p><button type="submit" class="primary-button">Masuk <span>→</span></button><p class="login-register-hint">Belum punya akun penjual? <button type="button" id="seller-register-trigger">Daftarkan usaha</button></p></form></dialog>
+  <dialog class="post-modal" id="post-modal"><form id="post-form"><div class="modal-top"><div><div class="eyebrow">KOMUNITAS UMKMHUB</div><h2>Bagikan cerita usahamu</h2><p>Ceritakan kabar, produk baru, atau pencapaianmu.</p></div><button type="button" class="post-close modal-close" aria-label="Tutup">×</button></div><label class="post-label">Postingan<textarea name="postText" rows="5" required placeholder="Apa cerita usahamu hari ini?"></textarea></label><div class="form-grid post-fields"><label>Produk (opsional)<input name="postProduct" placeholder="Nama produk"></label><label>Harga (opsional)<input name="postPrice" placeholder="Contoh: Rp 25.000"></label></div><div class="modal-actions"><button type="button" class="post-cancel cancel-button">Batal</button><button type="submit" class="primary-button">Publikasikan <span>↗</span></button></div></form></dialog>
+  <dialog class="profile-modal" id="profile-modal"><div class="profile-modal-cover"><span class="profile-modal-emoji"></span><button type="button" class="profile-close modal-close" aria-label="Tutup">×</button></div><div class="profile-modal-body"><div class="profile-modal-title"><div><div class="eyebrow">PROFIL UMKM · <span class="profile-category"></span></div><h2 class="profile-name"></h2><p class="profile-location"></p></div><button class="follow-button profile-follow">+ Ikuti</button></div><p class="profile-about">Usaha lokal yang tumbuh bersama komunitas UMKMHUB.</p><h3>Produk unggulan</h3><div class="profile-products"></div><button class="primary-button contact-owner">Hubungi via WhatsApp ↗</button></div></dialog>
+  <script src="store.js"></script>
+  <script src="home.js"></script>
+</body>
+</html>
